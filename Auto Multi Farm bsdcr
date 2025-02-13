@@ -148,7 +148,7 @@ while wait() do
         if TextBt.Text == "Enabled!" then
             local location = workspace.Buttons[TextBox.Text]:GetDescendants()
             repeat
-            local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local plr = game.Players.LocalPlayer.Character.LeftLeg
             for i,v in pairs(location) do
                 if v:IsA("Part") then
                     firetouchinterest(plr, v, 0)
