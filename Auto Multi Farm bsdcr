@@ -1,0 +1,162 @@
+for i,v in pairs(game.CoreGui:GetDescendants()) do
+    if v:IsA("ScreenGui") and v.Name == "SG" then
+v.Frame.TB1.Text = "Disabled"
+        v:Destroy()
+    end
+end
+ 
+local SG = Instance.new("ScreenGui", game.CoreGui)
+SG.Name = "SG"
+
+local function closeFrame(Frame)
+local tween = game.TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.fromScale(0,0)})
+tween:Play()
+tween.Completed:Wait()
+Frame.Visible = false
+end
+
+local function openFrame(Frame)
+Frame.Visible = true
+local tween = game.TweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.fromScale(0.4,0.25)})
+tween:Play()
+end
+-------------------------------
+local Frame = Instance.new("Frame", SG)
+Frame.Size = UDim2.fromScale(0.4, 0.25)
+Frame.AnchorPoint = Vector2.new(0.5,0.5)
+Frame.Position = UDim2.fromScale(0.5, 0.175)
+local UICorner11 = Instance.new("UICorner", Frame)
+local UIStroke11 = Instance.new("UIStroke", Frame)
+UIStroke11.ApplyStrokeMode = "Border"
+UIStroke11.Thickness = 1.5
+-------------------------------
+local TextBt3 = Instance.new("TextButton", SG)
+TextBt3.Name = "TextBt3"
+TextBt3.Size = UDim2.fromScale(0.06,0.06)
+TextBt3.Text = "Hide"
+TextBt3.BackgroundColor3 = Color3.fromRGB(255,0,0)
+TextBt3.Font = "Ubuntu"
+TextBt3.TextScaled = true
+TextBt3.AnchorPoint = Frame.AnchorPoint
+TextBt3.Position = UDim2.fromScale(0.705, 0.05)
+local OldPos = UDim2.fromScale(0.705, 0.05)
+local NewPos = UDim2.fromScale(0.86, -0.03)
+-------------------------------
+local UICorner10 = Instance.new("UICorner", TextBt3)
+local UIStroke10 = Instance.new("UIStroke", TextBt3)
+UIStroke10.ApplyStrokeMode = "Border"
+UIStroke10.Thickness = 1.5
+-------------------------------
+local TextBox = Instance.new("TextBox", Frame)
+TextBox.Font = Enum.Font.Ubuntu
+TextBox.Text = ""
+TextBox.PlaceholderText = "STAT"
+TextBox.PlaceholderColor3 = Color3.fromRGB(50,50,50)
+TextBox.Size = UDim2.fromScale(0.8, 0.5)
+TextBox.TextScaled = true
+TextBox.AnchorPoint = Frame.AnchorPoint
+TextBox.Position = UDim2.fromScale(0.5, 0.3)
+TextBox.ClearTextOnFocus = false
+-------------------------------
+local UICorner1 = Instance.new("UICorner", TextBox)
+local UIStroke1 = Instance.new("UIStroke", TextBox)
+UIStroke1.ApplyStrokeMode = "Border"
+UIStroke1.Thickness = 1.5
+-------------------------------
+local TextBt = Instance.new("TextButton", Frame)
+TextBt.Name = "TB1"
+local Color = Color3.fromRGB(255, 0, 0)
+TextBt.BackgroundColor3 = Color
+TextBt.Text = "Disabled."
+TextBt.AnchorPoint = Frame.AnchorPoint
+TextBt.Position = UDim2.fromScale(0.25,0.8)
+TextBt.Size = UDim2.fromScale(0.45,0.3)
+TextBt.TextScaled = true
+-------------------------------
+local TextBt2 = Instance.new("TextButton", Frame)
+TextBt2.BackgroundColor3 = Color3.fromRGB(255,0,0)
+TextBt2.Text = "Close"
+TextBt2.AnchorPoint = Frame.AnchorPoint
+TextBt2.Position = UDim2.fromScale(0.75,0.8)
+TextBt2.Size = UDim2.fromScale(0.45,0.3)
+TextBt2.TextScaled = true
+-------------------------------
+TextBt2.MouseButton1Click:Connect(function()
+TextBt.Text = "Disabled"
+game.CoreGui.SG:Destroy()
+end)
+-------------------------------
+local UICorner3 = Instance.new("UICorner", TextBt2)
+local UIStroke3 = Instance.new("UIStroke", TextBt2)
+UIStroke3.ApplyStrokeMode = "Border"
+UIStroke3.Thickness = 1.5
+-------------------------------
+local UICorner2 = Instance.new("UICorner", TextBt)
+local UIStroke2 = Instance.new("UIStroke", TextBt)
+UIStroke2.ApplyStrokeMode = "Border"
+UIStroke2.Thickness = 1.5
+-------------------------------
+
+
+local function toggleHide(SG, NewPos2, toggle)
+if SG.TextBt3.Text == "Hide" or toggle == false then
+local Color2 = Color3.fromRGB(0, 255, 0)
+SG.TextBt3.BackgroundColor3 = Color2
+game.TweenService:Create(SG.TextBt3, TweenInfo.new(0.7, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = NewPos2 or NewPos}):Play()
+            SG.TextBt3.Text = "Show"
+closeFrame(SG.Frame)
+        elseif SG.TextBt3.Text == "Show" or toggle == true then
+openFrame(SG.Frame)
+local Color2 = Color3.fromRGB(255, 0, 0)
+SG.TextBt3.BackgroundColor3 = Color2
+game.TweenService:Create(SG.TextBt3, TweenInfo.new(0.7, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = OldPos}):Play()
+            SG.TextBt3.Text = "Hide"
+        end
+end
+
+TextBt.MouseButton1Click:Connect(function()
+    if TextBox.Text ~= "" then
+        if TextBt.Text == "Disabled." then
+            Color = Color3.fromRGB(0, 255, 25)
+            TextBt.BackgroundColor3 = Color
+            TextBt.Text = "Enabled!"
+        elseif TextBt.Text == "Enabled!" then
+            Color = Color3.fromRGB(255, 0, 0)
+            TextBt.BackgroundColor3 = Color
+            TextBt.Text = "Disabled."
+        end
+    end
+end)
+
+TextBt3.MouseButton1Click:Connect(function()
+local tog = false
+if TextBt3.Text == "Hide" then
+tog = false
+else
+tog = true
+end
+        toggleHide(SG, UDim2.fromScale(0.86, -0.03), tog)
+for i,v in pairs(game.CoreGui:GetDescendants()) do
+if v.Name == "WC" and v.TextBt3.Text == "Hide" then
+toggleHide(v, UDim2.fromScale(0.86, 0.05), false)
+end
+end
+end)
+
+while wait() do
+    if TextBox.Text ~= "" then
+        if TextBt.Text == "Enabled!" then
+            local location = workspace.Buttons[TextBox.Text]:GetDescendants()
+            repeat
+            local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+            for i,v in pairs(location) do
+                if v:IsA("Part") then
+                    firetouchinterest(plr, v, 0)
+                    firetouchinterest(plr, v, 1)
+                end
+            end
+wait(0.05)
+            until TextBt.Text == "Disabled."
+        end
+    end
+end
